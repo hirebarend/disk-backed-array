@@ -1,4 +1,5 @@
 # Disk Backed Array
+
 Disked backed array is a data structure that combines the benefits of an array with the persistence of disk storage.
 
 ## Quickstart
@@ -15,6 +16,8 @@ npm install disk-backed-array
 import { DiskBackedArray } from 'disk-backed-array';
 
 const diskBackedArray: DiskBackedArray = new DiskBackedArray('logs.bin');
+
+await diskBackedArray.open();
 
 await diskBackedArray.set(0, Buffer.from('hello world'));
 
@@ -39,12 +42,20 @@ Returns data stored at specified index
 const buffer: Buffer = await diskBackedArray.get(0);
 ```
 
-### `length(): Promise<number>`
+### `length(): number`
 
 Return length of array
 
 ```typescript
-const length: number = await diskBackedArray.length();
+const length: number = diskBackedArray.length();
+```
+
+### `open(): Promise<void>`
+
+Opens the file descriptor
+
+```typescript
+await diskBackedArray.open();
 ```
 
 ### `set(index: number, data: Buffer): Promise<void>`
@@ -53,6 +64,14 @@ Sets data at specified index
 
 ```typescript
 await diskBackedArray.set(0, buffer);
+```
+
+### `truncate(index: number): Promise<void>`
+
+Truncates data at specified index
+
+```typescript
+await diskBackedArray.truncate(0);
 ```
 
 ## File Format
@@ -66,7 +85,7 @@ await diskBackedArray.set(0, buffer);
 
 ## Performance
 
-|                     | set/second | get/second |
-|---------------------|------------|------------|
-| Single Queue        | 17 685     |            |
-| Parallel Queue (3)  | 26 234     |            |
+|                    | set/second | get/second |
+| ------------------ | ---------- | ---------- |
+| Single Queue       | 17 685     |            |
+| Parallel Queue (3) | 26 234     |            |

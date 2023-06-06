@@ -1,6 +1,6 @@
 {
   "name": "disk-backed-array",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Disked backed array is a data structure that combines the benefits of an array with the persistence of disk storage.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
